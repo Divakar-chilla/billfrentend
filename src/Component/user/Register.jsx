@@ -8,7 +8,7 @@ import { validatePassword } from 'val-pass';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import empServices from '../../service/empServices';
-
+import axios from 'axios';
 
 const Register = () => {
   const navigate=useNavigate()
