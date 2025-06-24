@@ -6,9 +6,12 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { MdEventRepeat } from "react-icons/md";
 import { validatePassword } from 'val-pass';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import empServices from '../../service/empServices';
 
 
 const Register = () => {
+  const navigate=useNavigate()
   const [formData,setFormData]=useState({
     userName:"",
     password:"",
@@ -44,7 +47,24 @@ const Register = () => {
     if(!matched){
       toast.error("passsword and confirm password did not match")
   return
+    }(async()=>{
+   try{
+    let data=await empServices.regiUser(formData)
+    console.log(data);
+    
+    if(data.status==201){
+      toast.success("registered successfully")
+      navigate("/login")
+
+    }else{
+      toast.error("somthing went wrong ")
     }
+   }catch(error){
+    toast.error("somthing went wrong")
+    console.log(error);
+    
+   }
+    })()
  console.log(formData);
  
    

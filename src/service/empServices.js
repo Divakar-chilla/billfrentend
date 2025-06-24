@@ -1,4 +1,5 @@
-import axiosInstance from "../components/AxiosInstance/Instance";
+import axiosInstance from "../Component/AxiosInstance/Instance";
+
 
 let empServices={
     regiUser:async(payload)=>{
