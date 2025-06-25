@@ -20,7 +20,7 @@ return(
             <NavLink to="/home">Home</NavLink>
         </div>
              <div className={`max-sm:hidden${show?'block':""}`}>
-            <NavLink to="/addBills">AddBills</NavLink>
+            <NavLink to="/addbills">AddBills</NavLink>
 
         </div>
         <div className={`max-sm:hidden${show?'block':""}`}>
