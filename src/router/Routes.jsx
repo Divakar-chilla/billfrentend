@@ -10,11 +10,13 @@ import Addbills from "../Component/user/main/addbi;ll/AddBill";
 
 let routes=createBrowserRouter([
     {
-        path:"/",
-        element:<Register></Register>
-    },{
-        path:"/login",
+        
+         path:"/",
         element:<Login></Login>
+    },{
+       
+         path:"/register",
+        element:<Register></Register>
     },{
         path:"/home",
         element:<Main></Main>,
@@ -27,7 +29,7 @@ let routes=createBrowserRouter([
                 element:<About></About>
             },{
                 path:"addbills",
-                element:<Addbills></Addbills>
+                element:<AddBill></AddBill>
             },{
                 path:"filterBill",
                 element:<FilterBill></FilterBill>

@@ -34,7 +34,7 @@ const Login = () => {
     // console.log(formData);
     
 (async()=>{
-let data=await empServices.loginUser()
+let data=await empServices.loginUser(formData)
 try {
   if(data.status==200){
   toast.success("Login successfully")

@@ -20,14 +20,14 @@ return(
             <NavLink to="/home">Home</NavLink>
         </div>
              <div className={`max-sm:hidden${show?'block':""}`}>
-            <NavLink to="/addbills">AddBills</NavLink>
+            <NavLink to="addbills">AddBills</NavLink>
 
         </div>
         <div className={`max-sm:hidden${show?'block':""}`}>
-            <NavLink to="/filterBills">FilterBills</NavLink>
+            <NavLink to="filterBills">FilterBills</NavLink>
         </div>
         <div className={`max-sm:hidden${show?'block':""}`}>
-            <NavLink to="/about">About</NavLink>
+            <NavLink to="about">About</NavLink>
         </div>
 
     </div>
