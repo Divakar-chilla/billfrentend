@@ -1,7 +1,12 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import BillItems from '../../../bill/BillItems'
+import empServices from '../../../../service/empServices'
+import { contextApi } from '../../../context/Context'
+import { useNavigate } from 'react-router-dom'
+import toast from 'react-hot-toast'
 
 const Addbills = () => {
+  const navigate=useNavigate()
   const [bill,setBill]=useState({
     companyName:"",
     PoNo:"",
@@ -12,7 +17,8 @@ const Addbills = () => {
     GSTNo:"",
     clientBankName:""
   })
-    const [items,setItems]=useState([])
+  const {globalState}=useContext(contextApi)
+  const [items,setItems]=useState([])
   const handelChange=(e)=>{
     let {name,value}=e.target
     setBill((preVal)=>({...preVal,[name]:value}))
@@ -41,9 +47,9 @@ const Addbills = () => {
 
       // console.log(base,cgst,sgst,acc);
       
-      return base+cgst+sgst
-    })
-        let payload={
+      return acc+base+cgst+sgst
+    },0)
+    let payload={
       companyName,
       workCompletionDate,
       PoNo,
@@ -52,21 +58,56 @@ const Addbills = () => {
       GSTNo,
       clientBankName,
       items,
+      invoiceDate:new Date().toISOString().split("T")[0],
       totalAmount
     }
     console.log(payload);
+
+    (async()=>{
+try {
+        let data=await empServices.addBills(payload,globalState.token)
+      if(data.status==201){
+        toast.success("Bills added successfully")
+        navigate("/home")
+      }else{
+        toast.error("Something went wrong")
+      }
+} catch (error) {
+  toast.error("Something went wrong")
+}
+    })();
     
 
   }
 
-  // console.log(items);
+  // console.log(new Date().toISOString().split("T")[0]);
+  
   const removeElement=(id)=>{
 setItems(items.filter((val)=>val.id!=id))
   }
-  
 
+  const updateElements=(id,name,value)=>{
+    // console.log(id,name,value);
+    
+    setItems((preVal)=>{
+     return preVal.map((val)=>{
+        if(val.id==id){
+      
+          
+          const updateItems={
+            ...val,[name]:value
+          }
+          updateItems.amount=val.rate*val.quantity
+          return updateItems
+        }
+
+        return val
+      })
+
+    })
+  }
   return (
-       <div className='bg-[#efefef] size-full flex justify-center items-center'>
+    <div className='bg-[#efefef] size-full flex justify-center items-center'>
           <form action="" className='w-1/2 h-[90%]  rounded-3xl bg-white shadow-2xl flex  items-center flex-col gap-8 px-[80px] py-20 max-sm:w-[90%] overflow-scroll' onSubmit={handelSubmit}>
             <div className='font-bold w-full flex justify-center items-center'>
               <h1 className='text-3xl max-lg:text-sm'>Add Bills</h1>
@@ -92,7 +133,9 @@ setItems(items.filter((val)=>val.id!=id))
 
                
             <div className='border-2  w-full flex justify-center items-center px-3 rounded-sm'>
-              <input type="date" name="workCompletionDate" placeholder='Enter Work Completion Date' className='w-full outline-none px-4 h-10' onChange={handelChange}/>
+              <input type="date" name="workCompletionDate" placeholder='Enter Work Completion Date' className='w-full outline-none px-4 h-10' onChange={handelChange}
+              max={new Date().toISOString().split("T")[0]}
+              />
         
             </div>
 
@@ -129,6 +172,7 @@ setItems(items.filter((val)=>val.id!=id))
             key={val.id}
             removeElement={removeElement}
             val={val}
+            updateElements={updateElements}
             ></BillItems>)
           }          
             <div className='border-2  w-full flex justify-center items-center px-3 rounded-sm bg-black hover:bg-[#555] active:bg-lime-500 active:scale-[0.9]'>
