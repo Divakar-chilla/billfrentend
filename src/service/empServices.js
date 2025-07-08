@@ -19,6 +19,7 @@ let empServices={
     loginUser:async(payload)=>{
         try {
         let data=await axiosInstance.post("/login",payload)
+        
     //   console.log(data);
     return data
         } catch (error) {
@@ -33,7 +34,7 @@ let empServices={
         try {
             let data=await axiosInstance.post("/add-bill",payload,{
                 headers:{
-                    "Authorization":`Bearer ${token}`
+                   "Authorization":`Bearer ${token}`
                 }
             })
 

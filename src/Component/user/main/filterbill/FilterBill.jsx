@@ -1,9 +1,11 @@
 import React from 'react'
 
-const FilterBill = () => {
+const FilterBills = () => {
   return (
-    <div>FilterBill</div>
+    <div>
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBVQqSFs0B_CFlAKxM_tKMiDx4ctJZaj71vA&s" alt="" className='w-full'/>
+    </div>
   )
 }
 
-export default FilterBill
+export default FilterBills

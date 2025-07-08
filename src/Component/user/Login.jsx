@@ -1,14 +1,16 @@
-
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { MdAlternateEmail } from 'react-icons/md'
 import { RiLockPasswordLine } from 'react-icons/ri'
-import { useNavigate } from 'react-router-dom'
-import empServices  from '../../service/empServices'
+import { Link, useNavigate } from 'react-router-dom'
+import empServices from '../../service/empServices'
 import toast from 'react-hot-toast'
-import { Link } from 'react-router-dom'
+import { contextApi } from '../context/Context'
 
 const Login = () => {
     const navigate=useNavigate()
+    const {globalState,setglobalState}=useContext(contextApi)
+    console.log(globalState,setglobalState);
+    
   const [formData,setFormData]=useState({
 
     password:"",
@@ -35,22 +37,27 @@ const Login = () => {
     
 (async()=>{
 let data=await empServices.loginUser(formData)
+// console.log(data);
+
 try {
   if(data.status==200){
   toast.success("Login successfully")
+  setglobalState((preVal)=>({...preVal,token:data.data.token}))
   navigate("/home")
+  
 }else{
   toast.error(`${data.response.data.message}`)
 }
 } catch (error) {
   toast.error("Something went wrong")
+  console.log(error);
+  
 }
-})()
-   
+})();
    
   }
   return (
-   <div className='bg-[#efefef] size-full flex justify-center items-center'>
+    <div className='bg-[#efefef] size-full flex justify-center items-center'>
          <form action="" className='w-1/2 h-[70%]  rounded-3xl bg-white shadow-2xl flex  items-center flex-col gap-8 px-[80px] py-20 max-sm:w-[90%] overflow-scroll' onSubmit={handelSubmit}>
            <div className='font-bold w-full flex justify-center items-center'>
              <h1 className='text-3xl max-lg:text-sm'>Login Form</h1>
@@ -79,5 +86,4 @@ try {
        </div>
   )
 }
-
 export default Login
