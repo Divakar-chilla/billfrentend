@@ -1,24 +1,28 @@
 import React, { useContext, useState } from 'react'
-import BillItems from '../../../bill/BillItems'
 import empServices from '../../../../service/empServices'
 import { contextApi } from '../../../context/Context'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
+import BillItems from '../../../bill/BillItems'
 
-const Addbills = () => {
-  const navigate=useNavigate()
+
+const UpdateBills = () => {
+    const navigate=useNavigate()
+    let {state}=useLocation()
+    console.log(state);
+    
   const [bill,setBill]=useState({
-    companyName:"",
-    PoNo:"",
+    companyName:state.companyName,
+    PoNo:state.PoNo,
     invoiceDate:new Date().toISOString().split("T")[0],
-    workCompletionDate:"",
-    address:"",
-    PAN:"",
-    GSTNo:"",
-    clientBankName:""
+    workCompletionDate:state.workCompletionDate.split("T")[0],
+    address:state.address,
+    PAN:state.PAN,
+    GSTNo:state.GSTNo,
+    clientBankName:state.clientBankName
   })
   const {globalState}=useContext(contextApi)
-  const [items,setItems]=useState([])
+  const [items,setItems]=useState(state.items)
   const handelChange=(e)=>{
     let {name,value}=e.target
     setBill((preVal)=>({...preVal,[name]:value}))
@@ -64,9 +68,9 @@ const Addbills = () => {
 
     (async()=>{
 try {
-        let data=await empServices.addBills(payload,globalState.token)
-      if(data.status==201){
-        toast.success("Bills added successfully")
+        let data=await empServices.updateBills(payload,globalState.token,state._id)
+      if(data.status==200){
+        toast.success("Bill Updated successfully")
         navigate("/home")
       }else{
         toast.error("Something went wrong")
@@ -105,25 +109,26 @@ setItems(items.filter((val)=>val.id!=id))
 
     })
   }
+  let {PAN,companyName,GSTNo,workCompletionDate,clientBankName,address,PoNo} =bill
   return (
-    <div className='bg-[#efefef] size-full flex justify-center items-center'>
+     <div className='bg-[#efefef] size-full flex justify-center items-center'>
           <form action="" className='w-1/2 h-[90%]  rounded-3xl bg-white shadow-2xl flex  items-center flex-col gap-8 px-[80px] py-20 max-sm:w-[90%] overflow-scroll' onSubmit={handelSubmit}>
             <div className='font-bold w-full flex justify-center items-center'>
-              <h1 className='text-3xl max-lg:text-sm'>Add Bills</h1>
+              <h1 className='text-3xl max-lg:text-sm'>Update Bills</h1>
             </div>
     
-            <div className='border-2  w-full flex justify-center items-center px-3 rounded-sm'>
-              <input type="text" name="name" placeholder='Enter Name' className='w-full outline-none px-4 h-10'  onChange={handelChange}/>
+            {/* <div className='border-2  w-full flex justify-center items-center px-3 rounded-sm'>
+              <input type="text" name="name" placeholder='Enter Name' className='w-full outline-none px-4 h-10'  onChange={handelChange} value={companyName}/>
             
-            </div>
+            </div> */}
     
              <div className='border-2  w-full flex justify-center items-center px-3 rounded-sm'>
-              <input type="text" name="companyName" placeholder='Enter Company Name' className='w-full outline-none px-4 h-10' onChange={handelChange}/>
+              <input type="text" name="companyName" placeholder='Enter Company Name' className='w-full outline-none px-4 h-10' onChange={handelChange} value={companyName}/>
                         </div>
     
     
             <div className='border-2  w-full flex justify-center items-center px-3 rounded-sm'>
-              <input type="text" name="PoNo" placeholder='Enter PoNo' className='w-full outline-none px-4 h-10' onChange={handelChange}/>
+              <input type="text" name="PoNo" placeholder='Enter PoNo' className='w-full outline-none px-4 h-10' onChange={handelChange} value={PoNo}/>
        
             </div>
     
@@ -132,7 +137,7 @@ setItems(items.filter((val)=>val.id!=id))
 
                
             <div className='border-2  w-full flex justify-center items-center px-3 rounded-sm'>
-              <input type="date" name="workCompletionDate" placeholder='Enter Work Completion Date' className='w-full outline-none px-4 h-10' onChange={handelChange}
+              <input type="date" name="workCompletionDate" placeholder='Enter Work Completion Date' className='w-full outline-none px-4 h-10' onChange={handelChange} value={workCompletionDate}
               max={new Date().toISOString().split("T")[0]}
               />
         
@@ -141,28 +146,28 @@ setItems(items.filter((val)=>val.id!=id))
 
                            
             <div className='border-2  w-full flex justify-center items-center px-3 rounded-sm'>
-              <input type="text" name="address" placeholder='Enter Address' className='w-full outline-none px-4 h-10' onChange={handelChange}/>
+              <input type="text" name="address" placeholder='Enter Address' className='w-full outline-none px-4 h-10' onChange={handelChange} value={address}/>
         
             </div>
 
 
                                      
             <div className='border-2  w-full flex justify-center items-center px-3 rounded-sm'>
-              <input type="text" name="PAN" placeholder='Enter PAN' className='w-full outline-none px-4 h-10' onChange={handelChange}/>
+              <input type="text" name="PAN" placeholder='Enter PAN' className='w-full outline-none px-4 h-10' onChange={handelChange} value={PAN}/>
         
             </div>
 
 
                                      
             <div className='border-2  w-full flex justify-center items-center px-3 rounded-sm'>
-              <input type="text" name="GSTNo" placeholder='Enter GST No' className='w-full outline-none px-4 h-10' onChange={handelChange}/>
+              <input type="text" name="GSTNo" placeholder='Enter GST No' className='w-full outline-none px-4 h-10' onChange={handelChange} value={GSTNo}/>
         
             </div>
 
 
                                      
             <div className='border-2  w-full flex justify-center items-center px-3 rounded-sm'>
-              <input type="text" name="clientBankName" placeholder='Enter Client Bank Name' className='w-full outline-none px-4 h-10' onChange={handelChange}/>
+              <input type="text" name="clientBankName" placeholder='Enter Client Bank Name' className='w-full outline-none px-4 h-10' onChange={handelChange} value={clientBankName}/>
         
             </div>
     
@@ -186,4 +191,4 @@ setItems(items.filter((val)=>val.id!=id))
   )
 }
 
-export default Addbills
+export default UpdateBills
