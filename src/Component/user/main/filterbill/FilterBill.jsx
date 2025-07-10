@@ -21,19 +21,22 @@ const FilterBills = () => {
 
                
             <div className='border-2  w-full flex justify-center items-center px-3 rounded-sm'>
-              <label htmlFor="input">to invoiceDate</label>
+              <label htmlFor="input" className='flex justify-center'>ToInvoiceDate</label>
               <input type="date" name="workCompletionDate" placeholder='Enter Work Completion Date' className='w-full outline-none px-4 h-10'
               max={new Date().toISOString().split("T")[0]}/>
               </div>
               <div className='border-2  w-full flex justify-center items-center px-3 rounded-sm'>
+                 <label htmlFor="input" className='flex justify-center'>frromInvoiceDate</label>
               <input type="date" name="workCompletionDate" placeholder='Enter Work Completion Date' className='w-full outline-none px-4 h-10'
               max={new Date().toISOString().split("T")[0]}/>
               </div>
               <div className='border-2  w-full flex justify-center items-center px-3 rounded-sm'>
+                 <label htmlFor="input" className='flex justify-center'>ToworkcompletionDate</label>
               <input type="date" name="workCompletionDate" placeholder='Enter Work Completion Date' className='w-full outline-none px-4 h-10'
               max={new Date().toISOString().split("T")[0]}/>
               </div>
               <div className='border-2  w-full flex justify-center items-center px-3 rounded-sm'>
+                 <label htmlFor="input" className='flex justify-center'>fromworkcompletionDate</label>
               <input type="date" name="workCompletionDate" placeholder='Enter Work Completion Date' className='w-full outline-none px-4 h-10'
               max={new Date().toISOString().split("T")[0]}/>
               </div>
