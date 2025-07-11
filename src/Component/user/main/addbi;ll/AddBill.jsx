@@ -107,7 +107,7 @@ setItems(items.filter((val)=>val.id!=id))
   }
   return (
     <div className='bg-[#efefef] size-full flex justify-center items-center'>
-          <form action="" className='w-1/2 h-[90%]  rounded-3xl bg-white shadow-2xl flex  items-center flex-col gap-8 px-[80px] py-20 max-sm:w-[90%] overflow-scroll' onSubmit={handelSubmit}>
+          <form action="" className='w-1/2 h-[90%]  rounded-3xl bg-amber-100 shadow-2xl flex  items-center flex-col gap-8 px-[80px] py-20 max-sm:w-[90%] overflow-scroll' onSubmit={handelSubmit}>
             <div className='font-bold w-full flex justify-center items-center'>
               <h1 className='text-3xl max-lg:text-sm'>Add Bills</h1>
             </div>

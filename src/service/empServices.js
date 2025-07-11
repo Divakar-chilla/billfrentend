@@ -97,6 +97,23 @@ let empServices={
             // console.log(error);
             return error
         }
+    },CompanyName:async (token)=>{
+        
+        
+        try {
+            let data=await axiosInstance.get("get-company-names",{
+                headers:{
+                    "Authorization":`Bearer ${token}`
+                }
+            })
+
+            // console.log(data);
+            return data
+            
+        } catch (error) {
+            // console.log(error);
+            return error
+        }
     },
 }
 
