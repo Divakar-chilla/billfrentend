@@ -64,7 +64,7 @@ let query=new URLSearchParams(queries).toString();
     setShowCompanyName(!showCompanyNames);
     (async()=>{
 try {
-        let data=await empServices.companyName(globalState.token)
+        let data=await empServices.CompanyName(globalState.token)
       console.log(data);
       if(data.status==200){
         setComoantNames(data.data.companies)
